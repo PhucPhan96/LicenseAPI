@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.1.xsd  
+     http://www.springframework.org/schema/mvc
+     http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+ 
+   <context:component-scan base-package="nfc.controller, nfc.serviceImpl, nfc.socket"/>
+   <context:annotation-config />
+ 
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+ 
+       <property name="prefix">
+           <value>/WEB-INF/pages/</value>
+       </property>
+ 
+       <property name="suffix">
+           <value>.jsp</value>
+       </property>
+ 
+   </bean>
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <property name="maxUploadSize" value="52428800"></property>
+   </bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <property name="host" value="smtp.gmail.com" />
+            <property name="port" value="587" />
+<!--            <property name="username" value="kjncunn@gmail.com" />
+            <property name="password" value="tinhyeutrongem" />-->
+            <property name="javaMailProperties">
+               <props>
+                  <prop key="mail.smtp.auth">false</prop>
+                  <prop key="mail.smtp.starttls.enable">true</prop>
+                  <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+                </props>
+            </property>
+    </bean>
+    
+<!--    <task:scheduled-tasks scheduler="myScheduler">
+        <task:scheduled ref="beanA" method="methodA" fixed-delay="5000"/>
+    </task:scheduled-tasks>-->
+
+<!--    <task:scheduler id="myScheduler" pool-size="10"/>-->
+
+    <!--CONFIG SCHEDULE-->
+    
+<!--    <bean id="loginPaymentAPI" class="nfc.schedule.LoginPaymentAPI"/>
+    
+    <bean id="jobLoginPayment" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="loginPaymentAPI"/>
+        <property name="targetMethod" value="doLogin"/>
+    </bean>
+    
+    <bean id="loginPaymentAPITrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        
+        <property name="jobDetail" ref="jobLoginPayment"/>
+       
+        <property name="repeatInterval" value="5000"/>
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="loginPaymentAPITrigger"/>
+            </list>
+        </property>
+    </bean>-->
+     <!-- 10 seconds -->
+<!--        <property name="startDelay" value="10000"/>-->
+        <!-- repeat every 50 seconds -->
+    <!--END CONFIG SCHEDULE-->
+        
+   <mvc:resources mapping="/resources/**" location="/assets/"/>
+   <mvc:resources mapping="/uploads/images/**" location="/uploads/images/" />
+   <mvc:resources mapping="/app/**" location="/app/" />
+   <mvc:annotation-driven/>
+</beans>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+ 	
+ 	 <bean id="loginDAO" class="nfc.serviceImpl.LoginService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="userDAO" class="nfc.serviceImpl.UserService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="roleDAO" class="nfc.serviceImpl.RoleService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="commonDAO" class="nfc.serviceImpl.common.CommonService">
+	 </bean>
+	 <bean id="groupDAO" class="nfc.serviceImpl.GroupService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="categoryDAO" class="nfc.serviceImpl.CategoryService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="supplierDAO" class="nfc.serviceImpl.SupplierService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <!-- <bean id="supplierworkDAO" class="nfc.serviceImpl.SupplierWorkService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean> -->
+	 <bean id="productDAO" class="nfc.serviceImpl.ProductService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="fileDAO" class="nfc.serviceImpl.FileService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="orderDAO" class="nfc.serviceImpl.OrderService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="codeDAO" class="nfc.serviceImpl.CodeService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="programDAO" class="nfc.serviceImpl.ProgramService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="posDAO" class="nfc.serviceImpl.PosService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="mailDAO" class="nfc.serviceImpl.MailService">
+	 </bean>
+	 <bean id="boardDAO" class="nfc.serviceImpl.BoardService">
+	 </bean>
+	 <bean id="threadDAO" class="nfc.serviceImpl.ThreadService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+         <bean id="paymentDAO" class="nfc.serviceImpl.PaymentService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+         <bean id="deliveryService" class="nfc.serviceImpl.DeliveryService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+         <bean id="textDAO" class="nfc.serviceImpl.TextService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+         <bean id="discountDAO" class="nfc.serviceImpl.DiscountService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+          <bean id="productStoreDAO" class="nfc.serviceImpl.ProductStoreService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+         <bean id="businessDayDAO" class="nfc.serviceImpl.BusinessDayService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+         <bean id="bannerDAO" class="nfc.serviceImpl.BannerService">
+	     <property name="sessionFactory" ref="mySessionFactory" />
+	 </bean>
+	 <bean id="keysingleDAO" class="nfc.serviceImpl.KeySingleService">
+        <property name="sessionFactory" ref="mySessionFactory" />
+        </bean>
+        <bean id="keytrialDAO" class="nfc.serviceImpl.KeyTrialService">
+            <property name="sessionFactory" ref="mySessionFactory" />
+        </bean>
+</beans>

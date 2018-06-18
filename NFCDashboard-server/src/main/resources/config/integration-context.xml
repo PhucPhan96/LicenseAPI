@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:stream="http://www.springframework.org/schema/integration/stream"
+             xmlns:websocket="http://www.springframework.org/schema/websocket"
+             xmlns:int-websocket="http://www.springframework.org/schema/integration/websocket"
+             xmlns:int-http="http://www.springframework.org/schema/integration/http"
+             xmlns:util="http://www.springframework.org/schema/util"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans.xsd
+                                 http://www.springframework.org/schema/context
+                                 http://www.springframework.org/schema/context/spring-context.xsd
+                                 http://www.springframework.org/schema/websocket
+								 http://www.springframework.org/schema/websocket/spring-websocke.xsd
+                                 http://www.springframework.org/schema/integration
+                                 http://www.springframework.org/schema/integration/spring-integration-4.3.xsd
+                                 http://www.springframework.org/schema/integration/stream
+                                 http://www.springframework.org/schema/integration/stream/spring-integration-stream-4.3.xsd
+                                 http://www.springframework.org/schema/integration/websocket
+    							 http://www.springframework.org/schema/integration/websocket/spring-integration-websocket-4.3.xsd
+    							 http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-4.3.xsd
+    							 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    
+    <gateway id="requestGateway" 
+	             service-interface="nfc.serviceImpl.integration.RequestGateway"/>
+	             
+	<channel id="requestChannel"/>
+	<router input-channel="orderItemsChannel" method="routeOrder" ref="orderRouter"/>
+	<beans:bean class="nfc.serviceImpl.integration.endpoint.OrderRouter" id="orderRouter"/>
+    <!-- <transformer id="transJsontoOrder" input-channel="requestChannel" method="tranJsonToOrder" ref="transformOrder" output-channel="orders"/>
+	<beans:bean id="transformOrder" class="nfc.serviceImpl.integration.endpoint.TransJsonToOrder"/>
+	
+    <channel id="orders"/>
+    <service-activator input-channel="orders" ref="orderService" method="saveOrder" output-channel="posUpdate" />
+    <beans:bean id="orderService" class="nfc.serviceImpl.integration.endpoint.OrderServiceEndpoint"/>
+    <channel id="posUpdate">
+    </channel>
+    <transformer id="orderToJson" input-channel="posUpdate" method="tranOrderToJson" ref="transformOrder" output-channel="prepareSendToStore"/> -->
+    
+    <channel id="newOrder"></channel>
+    <channel id="paidOrder"></channel>
+    <!-- <service-activator input-channel="requetChannel" ref="orderService" method="saveOrder" output-channel="prepareSendToStore" /> -->
+    <service-activator input-channel="newOrder" ref="orderService" method="saveOrder" output-channel="prepareSendToStore" />
+    <service-activator input-channel="paidOrder" ref="orderService" method="updateOrder" output-channel="prepareSendToStore" />
+    <beans:bean id="orderService" class="nfc.serviceImpl.integration.endpoint.OrderServiceEndpoint"/>
+    <channel id="prepareSendToStore" >
+    </channel>
+    <!-- <int-http:outbound-gateway id="trafficGateway"
+	    url="http://localhost:8080/receiveGateway/{data}"
+	    request-channel="prepareSendToStore"
+	    http-method="GET"
+	    expected-response-type="java.lang.String">
+	    <int-http:uri-variable name="data" expression="payload"/>
+	</int-http:outbound-gateway>
+	 -->
+	<int-websocket:server-container path="/notify" allowed-origins="*" id="socketServer">
+		<int-websocket:sockjs/>
+	</int-websocket:server-container>
+    <poller default="true" fixed-delay="1"/>
+   <!--  <int-websocket:outbound-channel-adapter channel="prepareSendToStore" container="socketServer"></int-websocket:outbound-channel-adapter> -->
+    
+    
+    <!-- <int-jdbc:inbound-channel-adapter channel="orders"></int-jdbc:inbound-channel-adapter> -->
+</beans:beans>
